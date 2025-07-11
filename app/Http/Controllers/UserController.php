@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -44,5 +45,20 @@ class UserController extends Controller
             'user' => $user,
             'token' => $token
         ], 201);
+    }
+
+    public function me () {
+        $user = Auth::user();
+
+        if (!$user)
+            return response()->json(['message' => 'user not found'], 401);
+
+        return response()->json(['user' => $user], 200);
+    }
+
+    public function logout() {
+        Auth::user()->tokens()->delete();
+
+        return response()->json(['message' => 'logout success'], 201);
     }
 }

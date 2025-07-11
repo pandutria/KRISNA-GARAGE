@@ -13,5 +13,6 @@ Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function() {
     // User
-    
+    Route::get('/me', [UserController::class, 'me']);
+    Route::post('/logout', [UserController::class, 'logout']);
 });
