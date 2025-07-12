@@ -16,5 +16,7 @@ class Vehicle extends Model
         'frame_number',
     ];
 
-    
+    public function schedules() {
+        return $this->hasMany(Schedule::class, 'vehicle_id');
+    }
 }

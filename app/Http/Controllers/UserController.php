@@ -17,7 +17,7 @@ class UserController extends Controller
             if ($is) return response()->json(['message' => 'name is already in use'], 401);
 
             $user = new User();
-            $user->role = "customer";
+            $user->role = $request->role;
             $user->name = $request->name;
             $user->password = $request->password;
             $user->address = $request->address;

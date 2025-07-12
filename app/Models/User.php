@@ -26,6 +26,14 @@ class User extends Authenticatable
         'phone_number'
     ];
 
+    public function custSchedules() {
+        return $this->hasMany(Schedule::class, 'user_id');
+    }
+
+    public function mechanicSchedules() {
+        return $this->hasMany(Schedule::class, 'mechanic_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

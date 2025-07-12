@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Service extends Model   
+class Service extends Model
 {
     use HasFactory, Notifiable;
 
@@ -15,4 +15,8 @@ class Service extends Model
         'description',
         'price'
     ];
+
+    public function shcedules() {
+        return $this->hasMany(Schedule::class, 'service_id');
+    }
 }
