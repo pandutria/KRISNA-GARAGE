@@ -39,7 +39,12 @@ class ScheduleController extends Controller
      */
     public function show($id)
     {
+        $data = Schedule::find($id);
 
+        if (!$data)
+            return response()->json(['message' => 'not found'], 404);
+
+        return response()->json(['schedule' => $data], 200);
     }
 
     /**
@@ -60,33 +65,22 @@ class ScheduleController extends Controller
             $data->load(['customer', 'mechanic', 'vehicle', 'service']);
 
             return response()->json(['schedule' => $data], 201);
-
         } catch(Exception $err) {
             return response()->json(['err' => $err], 500);
         }
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Schedule $schedule)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Schedule $schedule)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Schedule $schedule)
+    public function destroy($id)
     {
-        //
+        $schedule = Schedule::find($id);
+
+        if (!$schedule)
+            return response()->json(['message' =>'not found'], 404);
+
+        $schedule->delete();
+        return response()->json(['message' => 'delete data success'], 200);
     }
 }

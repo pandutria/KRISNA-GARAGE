@@ -43,7 +43,7 @@ Route::post('/part', [PartController::class, 'store']); //admin, mechanic
 Route::put('/part/{id}', [PartController::class, 'update']); //admin, mechanic
 Route::delete('/part/{id}', [PartController::class, 'destroy']); //admin, mechanic
 
-Route::get('/schedule', [ScheduleController::class, 'index']); //admin, mechanic
-Route::get('/part/{id}', [PartController::class, 'show']); //admin, mechanic
-Route::put('/part/{id}', [PartController::class, 'update']); //admin, mechanic
-Route::delete('/part/{id}', [PartController::class, 'destroy']); //admin, mechanic
+Route::get('/schedule', [ScheduleController::class, 'index']); //admin
+Route::get('/schedule/{id}', [ScheduleController::class, 'show']); //admin
+Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy']); //admin
+
