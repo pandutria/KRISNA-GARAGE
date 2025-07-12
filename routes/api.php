@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
@@ -23,3 +24,9 @@ Route::get('/vehicle/{id}', [VehicleController::class, 'show']);
 Route::post('/vehicle', [VehicleController::class, 'store']);
 Route::put('/vehicle/{id}', [VehicleController::class, 'update']);
 Route::delete('/vehicle/{id}', [VehicleController::class, 'destroy']);
+
+Route::get('/service', [ServiceController::class, 'index']);
+Route::get('/service/{id}', [ServiceController::class, 'show']);
+Route::post('/service', [ServiceController::class, 'store']);
+Route::put('/service/{id}', [ServiceController::class, 'update']);
+Route::delete('/service/{id}', [ServiceController::class, 'destroy']);
