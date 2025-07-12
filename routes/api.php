@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PartController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -29,4 +30,9 @@ Route::get('/service', [ServiceController::class, 'index']);
 Route::get('/service/{id}', [ServiceController::class, 'show']);
 Route::post('/service', [ServiceController::class, 'store']);
 Route::put('/service/{id}', [ServiceController::class, 'update']);
-Route::delete('/service/{id}', [ServiceController::class, 'destroy']);
+
+Route::get('/part', [PartController::class, 'index']);
+Route::get('/part/{id}', [PartController::class, 'show']);
+Route::post('/part', [PartController::class, 'store']);
+Route::put('/part/{id}', [PartController::class, 'update']);
+Route::delete('/part/{id}', [PartController::class, 'destroy']);
