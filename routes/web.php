@@ -12,3 +12,7 @@ Route::get('/', function() {
 Route::get('/signup', function() {
     return Inertia::render('Auth/Register');
 });
+
+Route::get('/admin/dashboard', function() {
+    return Inertia::render('Admin/Dashboard');
+});
