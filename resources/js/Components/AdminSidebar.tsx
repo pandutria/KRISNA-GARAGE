@@ -23,8 +23,8 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    path: "/dashboard",
+    name: "Kendaraan",
+    path: "/admin/venichels",
   },
   {
     icon: <CalenderIcon />,
@@ -71,7 +71,7 @@ const othersItems: NavItem[] = [
   },
 ];
 
-const AppSidebar: React.FC = () => {
+const AdminSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const page = usePage();
   const location = page.url;
@@ -185,4 +185,4 @@ const AppSidebar: React.FC = () => {
   );
 };
 
-export default AppSidebar;
+export default AdminSidebar;

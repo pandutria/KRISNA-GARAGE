@@ -1,15 +1,20 @@
-import { SidebarProvider, useSidebar } from "../../Context/SideBarContext";
+import { SidebarProvider, useSidebar } from "../Context/SideBarContext";
 import AppHeader from "@/Components/Header";
-import AppSidebar from "../../Components/Sidebar";
+import AdminSidebar from "@/Components/AdminSidebar";
 import { ThemeProvider } from "@/Context/ThemeContext";
+import React from "react";
 
-const LayoutContent: React.FC = () => {
+interface LayoutContentProps {
+  children: React.ReactNode;
+}
+
+const AdminLayoutContent: React.FC<LayoutContentProps> = ({ children }) => {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
   return (
     <div className="min-h-screen xl:flex font-poppins">
       <div>
-        <AppSidebar />
+        <AdminSidebar />
       </div>
       <div
         className={`flex-1 transition-all duration-300 ease-in-out ${
@@ -17,21 +22,12 @@ const LayoutContent: React.FC = () => {
         } ${isMobileOpen ? "ml-0" : ""}`}
       >
         <AppHeader />
-        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+        <div className="p-4 mx-auto max-w-7xl md:p-6">
+          {children}
         </div>
       </div>
     </div>
   );
 };
 
-const Dashboard: React.FC = () => {
-  return (
-    <SidebarProvider>
-        <ThemeProvider>
-            <LayoutContent />
-        </ThemeProvider>
-    </SidebarProvider>
-  );
-};
-
-export default Dashboard;
+export default AdminLayoutContent

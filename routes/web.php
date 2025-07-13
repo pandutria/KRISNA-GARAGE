@@ -13,6 +13,6 @@ Route::get('/signup', function() {
     return Inertia::render('Auth/Register');
 });
 
-Route::get('/admin/dashboard', function() {
-    return Inertia::render('Admin/Dashboard');
+Route::get('/admin/venichels', function() {
+    return Inertia::render('Admin/Vehicle');
 });
