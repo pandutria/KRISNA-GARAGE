@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
+use App\Models\Service;
 use App\Models\Transaction;
 use Exception;
 use Illuminate\Http\Request;
@@ -59,10 +61,16 @@ class TransactionController extends Controller
         try {
             $data = new Transaction();
             $data->schedule_id = $request->schedule_id;
-            $data->total_price = $request->total_price;
-            $data->payment_method = $request->payment_method;
-            $data->payment_number = $request->payment_number;
-            $data->status = 'pending';
+
+            $schedule = Schedule::find($request->schedule_id);
+            $schedule->status = "approved";
+            $schedule->save();
+            $service = Service::find($schedule->service_id);
+
+            $data->total_price = $service->price;
+            // $data->payment_method = $request->payment_method;
+            // $data->payment_number = $request->payment_number;
+            $data->status = 'unpaid';
 
             $data->save();
             $data->load([
@@ -78,6 +86,16 @@ class TransactionController extends Controller
         }
     }
 
+    public function pay(Request $request, $id) {
+        $data = Transaction::find($id);
+        $data->payment_method = $request->payment_method;
+        $data->payment_number = $request->payment_number;
+        $data->status = 'procces';
+        $data->save();
+
+        return response()->json(['message' => 'success pay the transaction'], 200);
+    }
+
     public function updateStatus(Request $request, $id) {
         $data = Transaction::find($id);
 
@@ -91,7 +109,7 @@ class TransactionController extends Controller
             'schedule.mechanic',
             'schedule.vehicle',
             'schedule.service'
-        ])->get()->all();
+        ]);
 
         return response()->json(['transaction' => $data], 200);
     }

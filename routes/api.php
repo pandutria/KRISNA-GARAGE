@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MechanicController;
 use App\Http\Controllers\PartController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
 use App\Models\Schedule;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schedule as FacadesSchedule;
@@ -28,6 +32,18 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::get('/transaction/customer', [TransactionController::class, 'indexByCustomer']); //customer
 });
+
+Route::get('/mechanic', [MechanicController::class, 'index']); //admin
+// Route::get('/mechanic/{id}', [MechanicController::class, 'show']); //admin
+Route::post('/mechanic', [MechanicController::class, 'store']); //admin
+Route::put('/mechanic/{id}', [MechanicController::class, 'update']); //admin
+Route::delete('/mechanic/{id}', [MechanicController::class, 'destroy']); //admin
+
+Route::get('/customer', [CustomerController::class, 'index']); //admin
+// Route::get('/customer/{id}', [CustomerController::class, 'show']); //admin
+Route::post('/customer', [CustomerController::class, 'store']); //admin
+Route::put('/customer/{id}', [CustomerController::class, 'update']); //admin
+Route::delete('/customer/{id}', [CustomerController::class, 'destroy']); //admin
 
 Route::get('/vehicle', [VehicleController::class, 'index']); //admin
 Route::get('/vehicle/{id}', [VehicleController::class, 'show']); //admin
@@ -53,7 +69,12 @@ Route::delete('/schedule/{id}', [ScheduleController::class, 'destroy']); //admin
 Route::get('/transaction', [TransactionController::class, 'index']); //cashier
 Route::get('/transaction/{id}', [TransactionController::class, 'show']); //cashier, customer
 Route::post('/transaction', [TransactionController::class, 'store']); //mechanic
+Route::put('/transaction/pay/{id}', [TransactionController::class, 'pay']); //customer
 Route::put('/transaction/updateStatus/{id}', [TransactionController::class, 'updateStatus']); //cashier
 Route::delete('/transaction/{id}', [TransactionController::class, 'destroy']); //cashier
+
+Route::get('/transactionDetail', [TransactionDetailController::class, 'index']); //cashier
+Route::get('/transactionDetail/transaction/{transactionId}', [TransactionDetailController::class, 'indexByTransaction']); //cashier
+Route::post('/transactionDetail', [TransactionDetailController::class, 'store']); //mechanic
 
 
