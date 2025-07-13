@@ -13,6 +13,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/Ui/Table";
+import { router } from "@inertiajs/react";
+import Swal from "sweetalert2";
 
 interface Data {
   id: number;
@@ -34,7 +36,36 @@ const Vehicle: React.FC = () => {
     }
 
     fetchData()
-  });
+  }, []);
+
+  const handleDelete = async(id: number) => {
+    try {
+      Swal.fire({
+        didOpen: () => {
+          Swal.showLoading()
+        },
+        allowOutsideClick: false,
+        title: 'Memuat...',
+        timer: 1000
+      });
+
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      await axios.delete(`/api/vehicle/${id}`);
+
+      Swal.fire({
+        title: "Hapus data berhasil",
+        icon: 'success',
+        confirmButtonColor: 'green',
+        confirmButtonText: 'Sukses'
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <SidebarProvider>
       <ThemeProvider>
@@ -102,12 +133,14 @@ const Vehicle: React.FC = () => {
                                 <button
                                   className="p-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-600 transition"
                                   title="Ubah"
+                                  onClick={() => router.visit(`/admin/edit/vehicle/${item.id}`)}
                                 >
                                   <Pencil size={18} />
                                 </button>
                                 <button
                                   className="p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 transition"
                                   title="Hapus"
+                                  onClick={() => handleDelete(item.id)}
                                 >
                                   <Trash2 size={18} />
                                 </button>

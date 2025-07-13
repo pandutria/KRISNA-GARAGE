@@ -1,21 +1,47 @@
 import { SidebarProvider } from '@/Context/SideBarContext'
 import { ThemeProvider } from '@/Context/ThemeContext'
 import AdminLayoutContent from '@/Pages/AdminLayoutContent'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ComponentCard from '@/Assets/Common/ComponentCard'
 import Label from '@/Assets/Common/Label'
 import Input from '@/Assets/Common/InputField'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { router } from '@inertiajs/react'
+import { router, usePage } from '@inertiajs/react'
 import Button from '@/Ui/Button'
 
-export default function AddVehicle () {
+export default function EditVehicle () {
+  interface Data {
+    id: number;
+    type: string
+    engine_number: any,
+    frame_number: any,
+    vehicle: any
+  }
+
   const [type, setType] = useState('');
   const [engine, setEngine] = useState('');
   const [frame, setFrame] = useState('');
+  const page = usePage();
+  const id = page.props.id;
 
-  const handlePost = async(e: React.FormEvent) => {
+  useEffect(() => {
+    const fetchDataById = async() => {
+        try {
+            const response = await axios.get<Data>(`/api/vehicle/${id}`);
+            const data = response.data.vehicle;
+            setType(data.type);
+            setEngine(data.engine_number);
+            setFrame(data.frame_number);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    fetchDataById();
+  }, [id]);
+
+  const handleEdit = async(e: React.FormEvent) => {
     e.preventDefault();
     try {
       Swal.fire({
@@ -28,14 +54,14 @@ export default function AddVehicle () {
       });
 
       await new Promise(resolve => setTimeout(resolve, 2000));
-      await axios.post('/api/vehicle', {
+      await axios.put(`/api/vehicle/${id}`, {
         type: type,
         engine_number: engine,
         frame_number: frame,
       });
 
       Swal.fire({
-        title: "Tambah data berhasil",
+        title: "Ubah data berhasil",
         icon: 'success',
         confirmButtonColor: 'green',
         confirmButtonText: 'Sukses'
@@ -46,7 +72,7 @@ export default function AddVehicle () {
       }, 3000);
     } catch (error) {
       Swal.fire({
-        title: "Tambah data gagal",
+        title: "Ubah data gagal",
         text: "Harap masukkan input dengan benar",
         icon: 'error',
         confirmButtonColor: 'red',
@@ -72,7 +98,7 @@ export default function AddVehicle () {
                       <Label htmlFor="input">Nomor Rangka</Label>
                       <Input type="number" value={frame} onChange={(e) => setFrame(e.target.value)} placeholder="Nomor Rangka..." />
                     </div>
-                    <Button onClick={handlePost} typeButton='kirim'>Kirim</Button>
+                    <Button onClick={handleEdit} typeButton='ubah'>Ubah</Button>
                   </div>
                 </ComponentCard>
             </AdminLayoutContent>

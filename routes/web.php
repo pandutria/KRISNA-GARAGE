@@ -21,3 +21,9 @@ Route::get('/admin/vehicles', function() {
 Route::get('/admin/add/vehicle', function() {
     return Inertia::render('Admin/Vehicle/AddVehicle');
 });
+
+Route::get('/admin/edit/vehicle/{id}', function($id) {
+    return Inertia::render('Admin/Vehicle/EditVehicle', [
+        'id' => $id
+    ]);
+});

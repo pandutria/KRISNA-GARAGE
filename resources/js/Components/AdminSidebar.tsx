@@ -13,6 +13,7 @@ import {
   UserCircleIcon,
 } from "../Assets/Icons/index";
 import { useSidebar } from "../Context/SideBarContext";
+import logo from '../../../public/images/logo.jpg';
 
 type NavItem = {
   name: string;
@@ -134,27 +135,24 @@ const AdminSidebar: React.FC = () => {
         <Link href="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
-              <img
-                className="dark:hidden"
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <img
-                className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
+              <div className="font-poppins flex items-center gap-3">
+                <img
+                  className="rounded-full"
+                  src={logo}
+                  alt="Logo"
+                  width={50}
+                  height={50}
+                />
+                <h1 className="font-[500] text-[20px] text-black dark:text-white">Krisna Garage</h1>
+              </div>
             </>
           ) : (
             <img
-              src="/images/logo/logo-icon.svg"
+            className="rounded-full"
+              src={logo}
               alt="Logo"
-              width={32}
-              height={32}
+              width={24}
+              height={24}
             />
           )}
         </Link>

@@ -34,7 +34,7 @@ export default function Login() {
                 Swal.showLoading()
             },
             allowOutsideClick: false,
-            title: "Please wait...",
+            title: "Memuat...",
             timer: 1000
         });
 
