@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Kendaraan",
-    path: "/admin/venichels",
+    path: "/admin/vehicles",
   },
   {
     icon: <CalenderIcon />,

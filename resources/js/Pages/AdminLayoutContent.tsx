@@ -1,7 +1,6 @@
-import { SidebarProvider, useSidebar } from "../Context/SideBarContext";
+import { useSidebar } from "../Context/SideBarContext";
 import AppHeader from "@/Components/Header";
 import AdminSidebar from "@/Components/AdminSidebar";
-import { ThemeProvider } from "@/Context/ThemeContext";
 import React from "react";
 
 interface LayoutContentProps {

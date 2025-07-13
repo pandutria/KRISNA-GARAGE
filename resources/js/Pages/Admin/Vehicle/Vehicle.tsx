@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/Context/ThemeContext";
 import { SidebarProvider } from "@/Context/SideBarContext";
-import AdminLayoutContent from "../AdminLayoutContent";
+import AdminLayoutContent from "../../AdminLayoutContent";
 import PageBreadcrumb from "@/Assets/Common/PageBreadCrumb";
 import ComponentCard from "@/Assets/Common/ComponentCard";
 import axios from "axios";
@@ -13,8 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/Ui/Table";
-
-import Badge from "@/Ui/Badge";
 
 interface Data {
   id: number;
@@ -43,7 +41,7 @@ const Vehicle: React.FC = () => {
         <AdminLayoutContent>
           <PageBreadcrumb pageTitle="Kendaraan" />
             <div className="space-y-6">
-              <ComponentCard title="List Kendaraan">
+              <ComponentCard title="List Kendaraan" addItem="/admin/add/vehicle">
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
                   <div className="max-w-full overflow-x-auto">
                     <Table>
