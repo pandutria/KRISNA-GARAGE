@@ -24,4 +24,8 @@ class Transaction extends Model
     public function schedule() {
         return $this->belongsTo(Schedule::class);
     }
+
+    public function transactionDetail() {
+        return $this->hasMany(TransactionDetail::class, 'transaction_id');
+    }
 }

@@ -16,4 +16,8 @@ class Part extends Model
         'type',
         'price'
     ];
+
+    public function transactionDetail() {
+        return $this->hasMany(TransactionDetail::class, 'part_id');
+    }
 }
