@@ -22,20 +22,26 @@ export default function UserDropdown() {
 
   useEffect(() => {
     const fetchMe = async() => {
-      const response = await axios.get('/api/me', {
-        headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
+      try {
+        const response = await axios.get('/api/me', {
+          headers: {
+              Authorization: `Bearer ${token}`
+            }
+        }); 
+      
         const user = response.data.user;
         if (!user) {
           router.visit('/');
-        }
-
+        } 
+        
         setName(user.name);
         setPhone(user.phone_number);
+      } catch (error) {
+        if (error) {
+          router.visit('/');
+        }
       }
+    }
 
       fetchMe();
   }, [token]);
