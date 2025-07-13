@@ -41,4 +41,8 @@ class Schedule extends Model
     public function vehicle() {
         return $this->belongsTo(Vehicle::class);
     }
+
+    public function transactions() {
+        return $this->hasMany(Transaction::class, 'schedule_id');
+    }
 }
