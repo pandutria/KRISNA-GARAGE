@@ -84,7 +84,7 @@ export default function EditVehicle () {
     <SidebarProvider>
         <ThemeProvider>
             <AdminLayoutContent>
-                <ComponentCard title="Tambah Kendaraan" showAdd={false}>
+                <ComponentCard title="Ubah Kendaraan" showAdd={false}>
                   <div className="space-y-6">
                     <div>
                       <Label htmlFor="input">Tipe Kendaraan</Label>

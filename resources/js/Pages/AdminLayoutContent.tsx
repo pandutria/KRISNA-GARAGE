@@ -1,14 +1,14 @@
 import { useSidebar } from "../Context/SideBarContext";
 import AppHeader from "@/Components/Header";
 import AdminSidebar from "@/Components/AdminSidebar";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface LayoutContentProps {
   children: React.ReactNode;
 }
 
 const AdminLayoutContent: React.FC<LayoutContentProps> = ({ children }) => {
-  const { isExpanded, isHovered, isMobileOpen } = useSidebar();
+  const { isExpanded, isHovered, isMobileOpen } = useSidebar();  
 
   return (
     <div className="min-h-screen xl:flex font-poppins">

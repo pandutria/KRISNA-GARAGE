@@ -151,8 +151,8 @@ const AdminSidebar: React.FC = () => {
             className="rounded-full"
               src={logo}
               alt="Logo"
-              width={24}
-              height={24}
+              width={45}
+              height={45}
             />
           )}
         </Link>

@@ -55,11 +55,11 @@ export default function Login() {
             confirmButtonColor:'green'
         });
         
-        if (userRole == '/admin') {            
+        if (userRole == 'admin') {            
             setTimeout(() => {
-                router.visit('/admin/dashboard');
+                router.visit('/admin/vehicles');
             }, 3000);
-        } else if (userRole == '/mechanic') {
+        } else if (userRole == 'mechanic') {
             setTimeout(() => {
                 router.visit('/mechanic/dashboard');
             }, 3000);
@@ -113,7 +113,7 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      placeholder="user@gmail.com"
+                      placeholder="User123"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       className="h-11 w-full rounded-lg border bg-transparent px-4 py-2.5 text-sm text-gray-800 dark:text-white/90 shadow-sm placeholder:text-gray-400 dark:placeholder:text-white/30 border-gray-300 dark:border-gray-700 focus:border-brand-300 dark:focus:border-brand-800 focus:outline-none focus:ring-3 focus:ring-brand-500/10"

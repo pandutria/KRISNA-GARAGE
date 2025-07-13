@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useSidebar } from "../Context/SideBarContext";
 import { ThemeToggleButton } from "../Assets/Common/ThemeToggleButton";
-import NotificationDropdown from "../Assets/Common/NotificationDropdown";
 import UserDropdown from "../Assets/Common/UserDropdown";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
-
-  const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
+  const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();  
 
   const handleToggle = () => {
     if (window.innerWidth >= 1024) {
@@ -32,11 +30,12 @@ const AppHeader: React.FC = () => {
       }
     };
 
+    
     document.addEventListener("keydown", handleKeyDown);
-
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
+
   }, []);
 
   return (

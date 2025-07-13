@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DropdownItem } from "../../Ui/DropdownItem";
 import { Dropdown } from "../../Ui/Dropdown";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
+import cookie from 'js-cookie';
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const token = cookie.get('token');
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('');
 
   function toggleDropdown() {
     setIsOpen(!isOpen);
@@ -13,17 +19,67 @@ export default function UserDropdown() {
   function closeDropdown() {
     setIsOpen(false);
   }
+
+  useEffect(() => {
+    const fetchMe = async() => {
+      const response = await axios.get('/api/me', {
+        headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const user = response.data.user;
+        if (!user) {
+          router.visit('/');
+        }
+
+        setName(user.name);
+        setPhone(user.phone_number);
+      }
+
+      fetchMe();
+  }, [token]);
+
+  const handleLogout = async() => {
+    try {
+      Swal.fire({
+        didOpen: () => {
+          Swal.showLoading()
+        },
+        allowOutsideClick: false,
+        title: 'Memuat...',
+        timer: 1000
+      });
+
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      await axios.post('/api/logout', {}, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      cookie.remove('token');
+      Swal.fire({
+        title: "Keluar Berhasil",
+        icon: 'success',
+        confirmButtonColor: 'green',
+        confirmButtonText: 'Sukses'
+      });
+
+      setTimeout(() => {
+        router.visit('/');
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <div className="relative">
       <button
         onClick={toggleDropdown}
         className="flex items-center text-gray-700 dropdown-toggle dark:text-gray-400"
       >
-        <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
-          <img src="/images/user/owner.jpg" alt="User" />
-        </span>
-
-        <span className="block mr-1 font-medium text-theme-sm">Musharof</span>
+        <span className="block mr-1 font-medium text-theme-sm">{name}</span>
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
@@ -51,16 +107,16 @@ export default function UserDropdown() {
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            Musharof Chowdhury
+            {name}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
-            randomuser@pimjo.com
+            {phone}
           </span>
         </div>
 
-        <Link
-          href="/signin"
-          className="flex items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
+        <div
+          onClick={handleLogout}
+          className="flex cursor-pointer items-center gap-3 px-3 py-2 mt-3 font-medium text-gray-700 rounded-lg group text-theme-sm hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300"
         >
           <svg
             className="fill-gray-500 group-hover:fill-gray-700 dark:group-hover:fill-gray-300"
@@ -78,7 +134,7 @@ export default function UserDropdown() {
             />
           </svg>
           Sign out
-        </Link>
+        </div>
       </Dropdown>
     </div>
   );
