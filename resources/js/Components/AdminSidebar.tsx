@@ -11,6 +11,8 @@ import {
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  FileIcon,
+  PartIcon
 } from "../Assets/Icons/index";
 import { useSidebar } from "../Context/SideBarContext";
 import logo from '../../../public/images/logo.jpg';
@@ -28,14 +30,14 @@ const navItems: NavItem[] = [
     path: "/admin/vehicles",
   },
   {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    icon: <FileIcon />,
+    name: "Layanan",
+    path: "/admin/services",
   },
   {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
+    icon: <PartIcon />,
+    name: "Suku Cadang",
+    path: "/admin/parts",
   },
   {
     name: "Forms",
@@ -132,7 +134,7 @@ const AdminSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link href="/">
+        <Link href="#">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
               <div className="font-poppins flex items-center gap-3">

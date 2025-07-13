@@ -49,7 +49,7 @@ export default function Login() {
         cookie.set('token', token);
 
         Swal.fire({
-            title: "Login Berhasil",
+            title: "Masuk Berhasil",
             icon: 'success',
             confirmButtonText: 'Sukses',
             confirmButtonColor:'green'
