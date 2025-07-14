@@ -13,7 +13,8 @@ import {
   UserCircleIcon,
   FileIcon,
   PartIcon,
-  MechanicIcon
+  MechanicIcon,
+  TimeIcon
 } from "../Assets/Icons/index";
 import { useSidebar } from "../Context/SideBarContext";
 import logo from '../../../public/images/logo.jpg';
@@ -49,6 +50,11 @@ const navItems: NavItem[] = [
     name: "Mekanik",
     icon: <MechanicIcon />,
     path: "/admin/mechanics",
+  },
+  {
+    name: "Jadwal",
+    icon: <TimeIcon />,
+    path: "/admin/schedules",
   },
 ];
 

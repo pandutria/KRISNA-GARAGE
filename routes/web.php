@@ -84,3 +84,7 @@ Route::get('/admin/edit/mechanic/{id}', function($id) {
         'id' => $id
     ]);
 });
+
+Route::get('/admin/schedules', function() {
+    return Inertia::render('Admin/Schedule/Schedule');
+});
