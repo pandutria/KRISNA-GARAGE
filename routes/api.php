@@ -55,7 +55,7 @@ Route::get('/service', [ServiceController::class, 'index']); //admin
 Route::get('/service/{id}', [ServiceController::class, 'show']); //admin
 Route::post('/service', [ServiceController::class, 'store']); //admin
 Route::put('/service/{id}', [ServiceController::class, 'update']); //admin
-Route::delete('/uri: service/{id}', [ServiceController::class, 'destroy']); //admin
+Route::delete('/service/{id}', [ServiceController::class, 'destroy']); //admin
 
 Route::get('/part', [PartController::class, 'index']); //admin, mechanic
 Route::get('/part/{id}', [PartController::class, 'show']); //admin, mechanic
