@@ -34,13 +34,13 @@ Route::middleware('auth:sanctum')->group(function() {
 });
 
 Route::get('/mechanic', [MechanicController::class, 'index']); //admin
-// Route::get('/mechanic/{id}', [MechanicController::class, 'show']); //admin
+Route::get('/mechanic/{id}', [MechanicController::class, 'show']); //admin
 Route::post('/mechanic', [MechanicController::class, 'store']); //admin
 Route::put('/mechanic/{id}', [MechanicController::class, 'update']); //admin
 Route::delete('/mechanic/{id}', [MechanicController::class, 'destroy']); //admin
 
 Route::get('/customer', [CustomerController::class, 'index']); //admin
-// Route::get('/customer/{id}', [CustomerController::class, 'show']); //admin
+Route::get('/customer/{id}', [CustomerController::class, 'show']); //admin
 Route::post('/customer', [CustomerController::class, 'store']); //admin
 Route::put('/customer/{id}', [CustomerController::class, 'update']); //admin
 Route::delete('/customer/{id}', [CustomerController::class, 'destroy']); //admin

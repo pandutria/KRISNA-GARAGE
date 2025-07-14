@@ -14,14 +14,14 @@ class MechanicController extends Controller
         return response()->json(['mechanic' => $data], 200);
     }
 
-    // public function show($id) {
-    //     $data = User::where($id);
+    public function show($id) {
+        $data = User::find($id);
 
-    //     if (!$data)
-    //         return response()->json(['message' => 'not found'], 404);
+        if (!$data)
+            return response()->json(['message' => 'not found'], 404);
 
-    //     return response()->json(['mechanic' => $data], 200);
-    // }
+        return response()->json(['mechanic' => $data], 200);
+    }
 
     public function store(Request $request) {
         try {
