@@ -61,7 +61,7 @@ export default function Login() {
             }, 3000);
         } else if (userRole == 'mechanic') {
             setTimeout(() => {
-                router.visit('/mechanic/dashboard');
+                router.visit('/mechanic/parts');
             }, 3000);
         } else if (userRole == 'cashier') {
             setTimeout(() => {
