@@ -17,52 +17,65 @@ import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
 import RupiahFormat from "@/Utils/RupiahFormat";
 
-interface Data {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
+  interface Data {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+  }
 
   const Service: React.FC = () => {
-    const [data, setData] = useState<Data[]>([]);
-    useEffect(() => {
-      const fetchData = async() => {
-        try {
-          const response = await axios.get('/api/service');
-          setData(response.data.service);
-        } catch (error) {
-          console.error(error);
-        }
-      }
+  const [data, setData] = useState<Data[]>([]);
 
+  const fetchData = async() => {
+    try {
+      const response = await axios.get('/api/service');
+      setData(response.data.service);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+    useEffect(() => {
       fetchData()
  }, []);
 
- const handleDelete = async(id: number) => {
+  const handleDelete = async(id: number) => {
     try {
       Swal.fire({
-        didOpen: () => {
-          Swal.showLoading()
-        },
-        allowOutsideClick: false,
-        title: 'Memuat...',
-        timer: 1000
+        icon: 'question',
+        title: "Apa kamu yakin untuk menghapus data ini?",
+        confirmButtonColor: 'red',
+        confirmButtonText: 'Iya',
+        showDenyButton: true,
+        denyButtonColor: 'green',
+        denyButtonText: 'Tidak'
+      }).then(async(result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            didOpen: () => {
+              Swal.showLoading()
+            },
+            allowOutsideClick: false,
+            title: 'Memuat...',
+            timer: 1000
+          });
+        
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          await axios.delete(`/api/service/${id}`);
+        
+          Swal.fire({
+            title: "Hapus data berhasil",
+            icon: 'success',
+            confirmButtonColor: 'green',
+            confirmButtonText: 'Sukses'
+          });
+        
+          setTimeout(() => {
+            fetchData();
+          }, 1000);
+        }
       });
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      await axios.delete(`/api/service/${id}`);
-
-      Swal.fire({
-        title: "Hapus data berhasil",
-        icon: 'success',
-        confirmButtonColor: 'green',
-        confirmButtonText: 'Sukses'
-      });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
     } catch (error) {
       console.error(error);
     }

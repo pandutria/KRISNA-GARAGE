@@ -128,6 +128,7 @@ export default function AddTransaction () {
         title: 'Memuat...',
         timer: 1000
       });
+      
       await new Promise(resolve => setTimeout(resolve, 2000));
       const responseTransactionHeader = await axios.post('/api/transaction', {
         schedule_id: scheduleId,
@@ -135,6 +136,7 @@ export default function AddTransaction () {
         payment_method: paymentMethod,
         payment_number: paymentNumber,
       });
+
       for (const item of transactionDetail) {
         await axios.post('/api/transactionId', {
           transaction_id: responseTransactionHeader.data.transaction.id,
@@ -143,12 +145,14 @@ export default function AddTransaction () {
           subtotal: item.subtotal
         });
       }
+
       Swal.fire({
         title: "Tambah data berhasil",
         icon: 'success',
         confirmButtonColor: 'green',
         confirmButtonText: 'Sukses'
       });
+
       setTimeout(() => { router.visit('/mechanic/add/transaction'); }, 3000);
     } catch (error) {
       console.error(error);
