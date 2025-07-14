@@ -55,8 +55,10 @@ import { ReactComponent as MoreDotIcon } from "./moredot.svg?react";
 import { ReactComponent as AlertHexaIcon } from "./alert-hexa.svg?react";
 import { ReactComponent as ErrorHexaIcon } from "./info-hexa.svg?react";
 import { ReactComponent as PartIcon } from './part.svg?react';
+import { ReactComponent as MechanicIcon } from "./mechanic.svg?react";
 
 export {
+  MechanicIcon,
   PartIcon,
   ErrorHexaIcon,
   AlertHexaIcon,

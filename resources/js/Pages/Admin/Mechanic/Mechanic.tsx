@@ -15,31 +15,31 @@ import {
 } from "@/Ui/Table";
 import { router } from "@inertiajs/react";
 import Swal from "sweetalert2";
-import RupiahFormat from "@/Utils/RupiahFormat";
 
 interface Data {
   id: number;
   name: string;
-  description: string;
-  price: number;
+  password: string;
+  address: string;
+  phone_number: number;
 }
 
-  const Service: React.FC = () => {
-    const [data, setData] = useState<Data[]>([]);
-    useEffect(() => {
-      const fetchData = async() => {
-        try {
-          const response = await axios.get('/api/service');
-          setData(response.data.service);
-        } catch (error) {
-          console.error(error);
-        }
+const Mechanic: React.FC = () => {
+  const [data, setData] = useState<Data[]>([]);
+  useEffect(() => {
+    const fetchData = async() => {
+      try {
+        const response = await axios.get('/api/mechanic');
+        setData(response.data.mechanic);
+      } catch (error) {
+        console.error(error);
       }
+    }
 
-      fetchData()
- }, []);
+    fetchData()
+  }, []);
 
- const handleDelete = async(id: number) => {
+  const handleDelete = async(id: number) => {
     try {
       Swal.fire({
         didOpen: () => {
@@ -51,7 +51,7 @@ interface Data {
       });
 
       await new Promise(resolve => setTimeout(resolve, 2000));
-      await axios.delete(`/api/service/${id}`);
+      await axios.delete(`/api/mechanic/${id}`);
 
       Swal.fire({
         title: "Hapus data berhasil",
@@ -71,9 +71,9 @@ interface Data {
     <SidebarProvider>
       <ThemeProvider>
         <AdminLayoutContent>
-          <PageBreadcrumb pageTitle="Layanan" />
+          <PageBreadcrumb pageTitle="Mekanik" />
             <div className="space-y-6">
-              <ComponentCard title="List Layanan" addItem="/admin/add/service">
+              <ComponentCard title="List Mekanik" addItem="/admin/add/mechanic">
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
                   <div className="max-w-full overflow-x-auto">
                     <Table>
@@ -96,13 +96,13 @@ interface Data {
                             isHeader
                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                           >
-                            Deskripsi
+                            Alamat
                           </TableCell>
                           <TableCell
                             isHeader
                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                           >
-                            Harga
+                            No. Telepon
                           </TableCell>
                           <TableCell
                             isHeader
@@ -123,18 +123,18 @@ interface Data {
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
                               {item.name}
                             </TableCell>
-                            <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white w-[400px]">
-                              {item.description}
+                            <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
+                              {item.address}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {RupiahFormat(item.price)}
+                              {item.phone_number}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-theme-sm dark:text-white">
                               <div className="flex gap-2">
                                 <button
                                   className="p-2 rounded-lg bg-blue-100 hover:bg-blue-200 text-blue-600 transition"
                                   title="Ubah"
-                                  onClick={() => router.visit(`/admin/edit/service/${item.id}`)}
+                                  onClick={() => router.visit(`/admin/edit/mechanic/${item.id}`)}
                                 >
                                   <Pencil size={18} />
                                 </button>
@@ -161,4 +161,4 @@ interface Data {
   );
 };
 
-export default Service;
+export default Mechanic;

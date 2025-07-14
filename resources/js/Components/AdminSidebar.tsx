@@ -12,7 +12,8 @@ import {
   TableIcon,
   UserCircleIcon,
   FileIcon,
-  PartIcon
+  PartIcon,
+  MechanicIcon
 } from "../Assets/Icons/index";
 import { useSidebar } from "../Context/SideBarContext";
 import logo from '../../../public/images/logo.jpg';
@@ -40,37 +41,14 @@ const navItems: NavItem[] = [
     path: "/admin/parts",
   },
   {
-    name: "Forms",
+    name: "Pelanggan",
     icon: <ListIcon />,
-    path: "/calendar",
+    path: "/admin/customers",
   },
   {
-    name: "Tables",
-    icon: <TableIcon />,
-    path: "/calendar",
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
-    path: "/calendar",
-  },
-];
-
-const othersItems: NavItem[] = [
-  {
-    icon: <PieChartIcon />,
-    name: "Charts",
-    path: "/line-chart",
-  },
-  {
-    icon: <BoxCubeIcon />,
-    name: "UI Elements",
-    path: "/alerts",
-  },
-  {
-    icon: <PlugInIcon />,
-    name: "Authentication",
-    path: "/signin",
+    name: "Mekanik",
+    icon: <MechanicIcon />,
+    path: "/admin/mechanics",
   },
 ];
 

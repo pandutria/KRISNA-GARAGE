@@ -56,3 +56,31 @@ Route::get('/admin/edit/part/{id}', function($id) {
         'id' => $id
     ]);
 });
+
+Route::get('/admin/customers', function() {
+    return Inertia::render('Admin/Customer/Customer');
+});
+
+Route::get('/admin/add/customer', function() {
+    return Inertia::render('Admin/Customer/AddCustomer');
+});
+
+Route::get('/admin/edit/customer/{id}', function($id) {
+    return Inertia::render('Admin/Customer/EditCustomer', [
+        'id' => $id
+    ]);
+});
+
+Route::get('/admin/mechanics', function() {
+    return Inertia::render('Admin/Mechanic/Mechanic');
+});
+
+Route::get('/admin/add/mechanic', function() {
+    return Inertia::render('Admin/Mechanic/AddMechanic');
+});
+
+Route::get('/admin/edit/mechanic/{id}', function($id) {
+    return Inertia::render('Admin/Mechanic/EditMechanic', [
+        'id' => $id
+    ]);
+});
