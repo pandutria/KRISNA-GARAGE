@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 interface Option {
+  id: number;
   value: string;
   label: string;
 }
@@ -20,13 +21,13 @@ const Select: React.FC<SelectProps> = ({
   className = "",
   defaultValue = "",
 }) => {
-  // Manage the selected value
+ 
   const [selectedValue, setSelectedValue] = useState<string>(defaultValue);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSelectedValue(value);
-    onChange(value); // Trigger parent handler
+    onChange(value); 
   };
 
   return (
@@ -50,8 +51,8 @@ const Select: React.FC<SelectProps> = ({
       {/* Map over options */}
       {options.map((option) => (
         <option
-          key={option.value}
-          value={option.value}
+          key={option.id}
+          value={option.id}
           className="text-gray-700 dark:bg-gray-900 dark:text-gray-400"
         >
           {option.label}

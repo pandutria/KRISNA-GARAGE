@@ -1,12 +1,10 @@
 import { ThemeProvider } from "@/Context/ThemeContext";
 import { SidebarProvider } from "@/Context/SideBarContext";
-import AdminLayoutContent from "../../AdminLayoutContent";
 import PageBreadcrumb from "@/Assets/Common/PageBreadCrumb";
 import ComponentCard from "@/Assets/Common/ComponentCard";
 import axios from "axios";
 import { Pencil, Trash2 } from "lucide-react";
 import { useState, useEffect } from "react";
-import cookie from 'js-cookie';
 import {
   Table,
   TableBody,
@@ -15,6 +13,7 @@ import {
   TableRow,
 } from "@/Ui/Table";
 import Swal from "sweetalert2";
+import CustomerLayoutContent from "@/Pages/CustomerLayoutContent";
 
 interface Data {
   id: number;
@@ -36,16 +35,10 @@ interface Data {
 
 const Schedule: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
-  const token = cookie.get('token');
-
   useEffect(() => {
     const fetchData = async() => {
       try {
-        const response = await axios.get('/api/schedule/customer', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        const response = await axios.get('/api/schedule');
         setData(response.data.schedule);
       } catch (error) {
         console.error(error);
@@ -54,42 +47,13 @@ const Schedule: React.FC = () => {
 
     fetchData()
   }, []);
-
-  const handleDelete = async(id: number) => {
-    try {
-      Swal.fire({
-        didOpen: () => {
-          Swal.showLoading()
-        },
-        allowOutsideClick: false,
-        title: 'Memuat...',
-        timer: 1000
-      });
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      await axios.delete(`/api/schedule/${id}`);
-
-      Swal.fire({
-        title: "Hapus data berhasil",
-        icon: 'success',
-        confirmButtonColor: 'green',
-        confirmButtonText: 'Sukses'
-      });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-    }
-  }
   return (
     <SidebarProvider>
       <ThemeProvider>
-        <AdminLayoutContent>
+        <CustomerLayoutContent>
           <PageBreadcrumb pageTitle="Jadwal" />
             <div className="space-y-6">
-              <ComponentCard title="List Jadwal" showAdd={false}>
+              <ComponentCard title="List Jadwal" addItem="/customer/add/schedule">
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
                   <div className="max-w-full overflow-x-auto">
                     <Table>
@@ -101,12 +65,6 @@ const Schedule: React.FC = () => {
                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                           >
                             No
-                          </TableCell>
-                          <TableCell
-                            isHeader
-                            className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                          >
-                            Pelanggan
                           </TableCell>
                           <TableCell
                             isHeader
@@ -138,12 +96,6 @@ const Schedule: React.FC = () => {
                           >
                             Tanggal
                           </TableCell>
-                          <TableCell
-                            isHeader
-                            className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                          >
-                            Aksi
-                          </TableCell>
                         </TableRow>
                       </TableHeader>
 
@@ -153,9 +105,6 @@ const Schedule: React.FC = () => {
                           <TableRow key={index}>
                             <TableCell className="px-5 py-4 sm:px-6 text-start">
                               {index + 1}
-                            </TableCell>
-                            <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {item.customer.name}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
                               {item.vehicle.type}
@@ -172,17 +121,6 @@ const Schedule: React.FC = () => {
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
                               {item.created_at.slice(0, 10)}
                             </TableCell>
-                            <TableCell className="px-4 py-3 text-black text-theme-sm dark:text-white">
-                              <div className="flex gap-2">
-                                <button
-                                  className="p-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 transition"
-                                  title="Hapus"
-                                  onClick={() => handleDelete(item.id)}
-                                >
-                                  <Trash2 size={18} />
-                                </button>
-                              </div>
-                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -191,7 +129,7 @@ const Schedule: React.FC = () => {
                 </div>
               </ComponentCard>
             </div>
-        </AdminLayoutContent>
+        </CustomerLayoutContent>
       </ThemeProvider>
     </SidebarProvider>
   );

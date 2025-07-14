@@ -69,7 +69,7 @@ export default function Login() {
             }, 3000);
         } else {
             setTimeout(() => {
-                router.visit('/customor/dashboard');
+                router.visit('/customer/schedules');
             }, 3000);
         }
     } catch (error: any) {

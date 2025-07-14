@@ -88,3 +88,12 @@ Route::get('/admin/edit/mechanic/{id}', function($id) {
 Route::get('/admin/schedules', function() {
     return Inertia::render('Admin/Schedule/Schedule');
 });
+
+// Route Customer
+Route::get('/customer/schedules', function() {
+    return Inertia::render('Pelanggan/Schedule/Schedule');
+});
+
+Route::get('/customer/add/schedule', function() {
+    return Inertia::render('Pelanggan/Schedule/AddSchedule');
+});
