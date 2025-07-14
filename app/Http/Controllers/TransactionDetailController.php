@@ -59,7 +59,7 @@ class TransactionDetailController extends Controller
             $data->save();
 
             $transaction = Transaction::find($request->transaction_id);
-            $transaction->total_price = $transaction->total_price + $data->subtotal;
+            $transaction->total_price = $request->total_price;
             $transaction->save();
 
             $data->load([
@@ -98,7 +98,7 @@ class TransactionDetailController extends Controller
     }
 
     public function updateStatus() {
-        
+
     }
 
     /**
