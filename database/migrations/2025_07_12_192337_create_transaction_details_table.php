@@ -16,11 +16,11 @@ return new class extends Migration
             $table->foreignId('transaction_id')->constrained('transactions')->onDelete('cascade');
             $table->foreignId('part_id')->constrained('parts')->onDelete('cascade');
             $table->integer('qty');
-            $table->integer('subtotal');
+            $table->bigInteger('subtotal');
             $table->timestamps();
         });
     }
- 
+
     /**
      * Reverse the migrations.
      */
