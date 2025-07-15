@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('schedule_id')->constrained('schedules')->onDelete('cascade');
-            $table->integer('total_price');
+            $table->bigInteger('total_price');
             $table->string('payment_method')->nullable();
             $table->string('payment_number')->nullable();
             $table->string('status');

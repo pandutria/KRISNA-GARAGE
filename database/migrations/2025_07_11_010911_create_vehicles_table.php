@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->integer('engine_number');
-            $table->integer('frame_number');
+            $table->bigInteger('engine_number');
+            $table->bigInteger('frame_number');
             $table->timestamps();
         });
     }
