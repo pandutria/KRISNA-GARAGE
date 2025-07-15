@@ -15,6 +15,10 @@ Route::get('/signup', function() {
 });
 
 // Route Admin
+Route::get('/admin/dashboard', function() {
+    return Inertia::render('Admin/AdminDashboard');
+});
+
 Route::get('/admin/vehicles', function() {
     return Inertia::render('Admin/Vehicle/Vehicle');
 });

@@ -14,7 +14,8 @@ import {
   FileIcon,
   PartIcon,
   MechanicIcon,
-  TimeIcon
+  TimeIcon,
+  FolderIcon
 } from "../Assets/Icons/index";
 import { useSidebar } from "../Context/SideBarContext";
 import logo from '../../../public/images/logo.jpg';
@@ -26,6 +27,11 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
+  {
+    icon: <FolderIcon />,
+    name: "Dasbor",
+    path: "/admin/dashboard",
+  },
   {
     icon: <GridIcon />,
     name: "Kendaraan",

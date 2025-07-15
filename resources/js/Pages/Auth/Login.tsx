@@ -57,7 +57,7 @@ export default function Login() {
         
         if (userRole == 'admin') {            
             setTimeout(() => {
-                router.visit('/admin/vehicles');
+                router.visit('/admin/dashboard');
             }, 3000);
         } else if (userRole == 'mechanic') {
             setTimeout(() => {
