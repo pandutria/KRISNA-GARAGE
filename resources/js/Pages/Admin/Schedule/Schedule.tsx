@@ -41,7 +41,7 @@ const Schedule: React.FC = () => {
   useEffect(() => {
     const fetchData = async() => {
       try {
-        const response = await axios.get('/api/schedule/customer', {
+        const response = await axios.get('/api/schedule', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

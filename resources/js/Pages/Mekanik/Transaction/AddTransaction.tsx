@@ -151,7 +151,7 @@ export default function AddTransaction () {
     <SidebarProvider>
       <ThemeProvider>
         <MechanicLayoutContent>
-          <ComponentCard title="Pembayaraan" showAdd={false}>
+          <ComponentCard title="Pembayaran" showAdd={false}>
             <div className="space-y-6">
               <div>
                 <Label htmlFor="input">Jadwal</Label>

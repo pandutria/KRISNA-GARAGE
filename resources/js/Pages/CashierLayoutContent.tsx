@@ -22,7 +22,7 @@ const CashierLayoutContent: React.FC<LayoutContentProps> = ({ children, show, se
       <div className={`${show == false ? 'hidden' : 'fixed'} z-[200]`}>
         <ShowDetailTransaction transactionId={id} show={show} setShow={setShow}/>
       </div>
-      <div>
+      <div className="">
         <CashierSidebar />
       </div>
       <div

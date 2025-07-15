@@ -89,7 +89,7 @@ const ShowDetailTransaction: React.FC<TransactionDetailProps> = ({ transactionId
       input: 'select',
       inputOptions: {
         success: 'Berhasil',
-        rejected: 'Tolak'
+        rejected: 'Ditolak'
       },
       inputLabel: 'Pilih status baru',
       showCancelButton: true,
@@ -123,7 +123,7 @@ const ShowDetailTransaction: React.FC<TransactionDetailProps> = ({ transactionId
   };
 
   return (
-    <div className='bg-[#0000004e] w-full h-screen fixed z-30 justify-center flex items-center'>
+    <div className='bg-[#0000004e] w-full min-h-screen fixed z-30 justify-center flex items-center'>
       <div className="bg-white dark:bg-gray-900 lg:p-8 py-8 px-5 rounded-lg lg:min-w-[600px] w-[290px] flex flex-col justify-center items-center relative">
         <div className="absolute right-[12px] top-[12px]">
           <button
@@ -161,9 +161,9 @@ const ShowDetailTransaction: React.FC<TransactionDetailProps> = ({ transactionId
           </div>
           <hr className='outline-none bg-black dark:bg-white lg:h-[2px] h-[1px] w-full' />
           <div className="overflow-x-scroll w-full">
-            <div className="flex flex-col gap-2 w-full h-[16vh]">
+            <div className="flex flex-col gap-2 w-full h-[16vh] print:h-auto">
               {transactionData?.map((item, index) => (
-                <div className="flex flex-col gap-4" key={index}>
+                <div className="flex flex-col gap-4 avoid-break" key={index}>
                   <div className="flex justify-between mt-1 items-start">
                     <p className='lg:text-[16px] text-[12px] dark:text-white'>{item.part.name}</p>
                     <div className="flex flex-col">

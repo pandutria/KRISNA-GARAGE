@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+}
+
+
 @layer base {
   body {
     @apply font-outfit bg-gray-50 text-gray-900 dark:text-white dark:bg-gray-900;
