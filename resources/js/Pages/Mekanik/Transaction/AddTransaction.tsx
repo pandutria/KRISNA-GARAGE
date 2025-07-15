@@ -11,7 +11,7 @@ import Button from '@/Ui/Button'
 import MechanicLayoutContent from '@/Pages/MechanicLayoutContent'
 import cookie from 'js-cookie'
 import { MinusIcon, PlusIcon } from 'lucide-react'
-import Input from '@/Assets/Common/InputField'
+import SelectFindId from '@/Assets/Common/SelectFindId'
 
 export default function AddTransaction () {
   interface TransactionDetail {
@@ -20,32 +20,14 @@ export default function AddTransaction () {
     subtotal: number;
   }
 
-  const [scheduleId, setScheduleId] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [paymentNumber, setPaymentNumber] = useState('');
+  const [scheduleId, setScheduleId] = useState('');  
   const [scheduleData, setScheduleData] = useState<any[]>([]);
   const [partData, setPartData] = useState<any[]>([]);
   const [transactionDetail, setTransactionDetail] = useState<TransactionDetail[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const token = cookie.get('token');
-
-  const MethodPaymentData = [
-    {
-        id: "Dana",
-        label: "Dana",
-        value: "Dana"
-    },
-    {
-        id: "BCA",
-        label: "BCA",
-        value: "BCA",
-    },
-    {
-        id: "Mandiri",
-        label: "Mandiri",
-        value: "Mandiri",
-    },
-  ];
+  const [servicePrice, setServicePrice] = useState(0);
+  const [serviceIdUser, setServiceIdUser] = useState(0);
 
   useEffect(() => {
     const fetchScheduleData = async() => {
@@ -53,10 +35,12 @@ export default function AddTransaction () {
         const response = await axios.get('/api/schedule/mechanic', {
           headers: { Authorization: `Bearer ${token}` }
         });
+
+        setServicePrice(response.data.schedule[serviceIdUser].service.price);
         const mappedData = response.data.schedule.map((item: any) => ({
           id: item.id,
           value: String(item.id),
-          label: `Kendaraan: ${item.vehicle.type} - Layanan: ${item.service.name}`
+          label: `Pelanggan: ${item.customer.name} - Kendaraan: ${item.vehicle.type} - Layanan: ${item.service.name}`
         }));
         setScheduleData(mappedData);
       } catch (error) { console.error(error); }
@@ -132,13 +116,10 @@ export default function AddTransaction () {
       await new Promise(resolve => setTimeout(resolve, 2000));
       const responseTransactionHeader = await axios.post('/api/transaction', {
         schedule_id: scheduleId,
-        total: totalPrice,
-        payment_method: paymentMethod,
-        payment_number: paymentNumber,
       });
 
       for (const item of transactionDetail) {
-        await axios.post('/api/transactionId', {
+        await axios.post('/api/transactionDetail', {
           transaction_id: responseTransactionHeader.data.transaction.id,
           part_id: item.part_id,
           qty: item.qty,
@@ -174,15 +155,16 @@ export default function AddTransaction () {
             <div className="space-y-6">
               <div>
                 <Label htmlFor="input">Jadwal</Label>
-                <Select className="dark:bg-dark-900" defaultValue={scheduleId} onChange={setScheduleId} options={scheduleData} placeholder='Pilih Jadwal...' />
-              </div>
-              <div>
-                <Label htmlFor="input">Metode Pembayaraan</Label>
-                <Select className="dark:bg-dark-900" defaultValue={paymentMethod} options={MethodPaymentData} onChange={setPaymentMethod} placeholder='Pilih Metode Pembayaran...' />
-              </div>
-              <div>
-                <Label htmlFor="input">No Pembayaraan</Label>
-                <Input type="number" value={paymentNumber} onChange={(e) => setPaymentNumber(e.target.value)} placeholder="No. Pembayaran..." />
+                <SelectFindId
+                  className="dark:bg-dark-900"
+                  defaultValue={scheduleId}
+                  onChange={(selectedOption) => {
+                    setScheduleId(String(selectedOption.id));
+                    setServiceIdUser(scheduleData.findIndex(item => item.id === selectedOption.id)); 
+                  }}
+                  options={scheduleData}
+                  placeholder='Pilih Jadwal...'
+                />
               </div>
               <div>
                 <Label htmlFor="input">Suku Cadang Yang Diperlukan</Label>
@@ -214,7 +196,7 @@ export default function AddTransaction () {
                 </div>
               </div>
               <div className="text-right text-[14px] font-semibold">
-                Total: Rp{totalPrice.toLocaleString()}
+                Total: Rp{totalPrice + servicePrice} (Sudah Dengan Layanan)
               </div>
               <Button onClick={handlePost} typeButton='kirim'>Kirim</Button>
             </div>

@@ -65,7 +65,7 @@ export default function Login() {
             }, 3000);
         } else if (userRole == 'cashier') {
             setTimeout(() => {
-                router.visit('/cashier/dashboard');
+                router.visit('/cashier/transactions');
             }, 3000);
         } else {
             setTimeout(() => {

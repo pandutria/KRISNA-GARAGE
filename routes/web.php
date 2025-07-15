@@ -98,6 +98,16 @@ Route::get('/customer/add/schedule', function() {
     return Inertia::render('Pelanggan/Schedule/AddSchedule');
 });
 
+Route::get('/customer/transactions', function() {
+    return Inertia::render('Pelanggan/Transaction/Transaction');
+});
+
+Route::get('/customer/transaction/payment/{id}', function($id) {
+    return Inertia::render('Pelanggan/Transaction/Payment', [
+        'id' => $id
+    ]);
+});
+
 // Route Mechanic
 Route::get('/mechanic/parts', function() {
     return Inertia::render('Mekanik/Part/Part');
@@ -119,4 +129,9 @@ Route::get('/mechanic/schedules', function() {
 
 Route::get('/mechanic/add/transaction', function() {
     return Inertia::render('Mekanik/Transaction/AddTransaction');
+});
+
+// Cashier
+Route::get('/cashier/transactions', function() {
+    return Inertia::render('Kasir/Transaction');
 });

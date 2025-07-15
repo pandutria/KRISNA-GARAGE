@@ -3,8 +3,8 @@ import { SidebarProvider } from "@/Context/SideBarContext";
 import PageBreadcrumb from "@/Assets/Common/PageBreadCrumb";
 import ComponentCard from "@/Assets/Common/ComponentCard";
 import axios from "axios";
-import cookie from 'js-cookie';
 import { useState, useEffect } from "react";
+import cookie from 'js-cookie';
 import {
   Table,
   TableBody,
@@ -12,54 +12,55 @@ import {
   TableHeader,
   TableRow,
 } from "@/Ui/Table";
-import Swal from "sweetalert2";
+import { router } from "@inertiajs/react";
 import CustomerLayoutContent from "@/Pages/CustomerLayoutContent";
+import RupiahFormat from "@/Utils/RupiahFormat";
 
 interface Data {
   id: number;
-  customer: {
-    name: string;
+  schedule: {
+    mechanic: {
+      name: String;
+    };
+    service: {
+      name: string;
+    };
+    vehicle: {
+      type: string;
+    }
   };
-  mechanic: {
-    name: string;
-  };
-  vehicle: {
-    type: string;
-  };
-  service: {
-    name: string;
-  }
+  total_price: any;
   status: string;
-  created_at: any;
 }
 
-const Schedule: React.FC = () => {
+const Transaction: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
   const token = cookie.get('token');
+  
+  const fetchData = async() => {
+    try {
+      const response = await axios.get('/api/transaction/customer', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setData(response.data.transaction);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   useEffect(() => {
-    const fetchData = async() => {
-      try {
-        const response = await axios.get('/api/schedule/customer', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setData(response.data.schedule);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
     fetchData()
   }, []);
+
   return (
     <SidebarProvider>
       <ThemeProvider>
         <CustomerLayoutContent>
-          <PageBreadcrumb pageTitle="Jadwal" />
+          <PageBreadcrumb pageTitle="Transaksi" />
             <div className="space-y-6">
-              <ComponentCard title="List Jadwal" addItem="/customer/add/schedule">
+              <ComponentCard title="List Transaksi" showAdd={false}>
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
                   <div className="max-w-full overflow-x-auto">
                     <Table>
@@ -76,13 +77,13 @@ const Schedule: React.FC = () => {
                             isHeader
                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                           >
-                            Kendaraan
+                            Layanan
                           </TableCell>
                           <TableCell
                             isHeader
                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                           >
-                            Layanan
+                            Kendaraan
                           </TableCell>
                           <TableCell
                             isHeader
@@ -100,7 +101,13 @@ const Schedule: React.FC = () => {
                             isHeader
                             className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                           >
-                            Tanggal
+                            Total Harga
+                          </TableCell>
+                          <TableCell
+                            isHeader
+                            className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                          >
+                            Bayar
                           </TableCell>
                         </TableRow>
                       </TableHeader>
@@ -113,19 +120,30 @@ const Schedule: React.FC = () => {
                               {index + 1}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {item.vehicle.type}
+                              {item.schedule.service.name}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {item.service.name}
+                              {item.schedule.vehicle.type}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {item.mechanic.name}
+                              {item.schedule.mechanic.name}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {item.status}
+                              {item.status == 'unpaid' ? 'Belum Terbayar' : item.status == 'procces' ? 'Sedang Diproses' : 'Sudah Terbayar'}
                             </TableCell>
                             <TableCell className="px-4 py-3 text-black text-start text-theme-sm dark:text-white">
-                              {item.created_at.slice(0, 10)}
+                              {RupiahFormat(item.total_price)}
+                            </TableCell>
+                            <TableCell className="px-4 py-3 text-black text-theme-sm dark:text-white">
+                              <div className="flex gap-2">
+                                <button
+                                  className={`p-2 rounded-lg w-full transition ${item.status !== 'unpaid' ? 'bg-gray-100 hover:bg-gray-200 text-gray-600' : 'bg-green-100 hover:bg-green-200 text-green-600'}`}
+                                  title="Ubah"
+                                  onClick={() => {item.status != 'unpaid' ? false : router.visit(`/customer/transaction/payment/${item.id}`)}}
+                                >
+                                  Bayar
+                                </button>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -141,4 +159,4 @@ const Schedule: React.FC = () => {
   );
 };
 
-export default Schedule;
+export default Transaction;
