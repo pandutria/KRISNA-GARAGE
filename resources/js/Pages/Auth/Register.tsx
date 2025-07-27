@@ -31,6 +31,7 @@ const Register = () => {
         password: password,
         phone_number: phone,
         address: address,
+        role: 'customer'
       });
 
       Swal.fire({
